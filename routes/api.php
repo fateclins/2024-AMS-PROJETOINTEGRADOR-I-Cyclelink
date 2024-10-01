@@ -5,3 +5,4 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('register', [AuthController::class, 'signIn']);
+Route::post('login', [AuthController::class, 'signIn']);

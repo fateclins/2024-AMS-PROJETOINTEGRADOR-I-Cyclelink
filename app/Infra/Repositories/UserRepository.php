@@ -19,13 +19,8 @@ class UserRepository extends DataRepository implements IUserRepository
         dd("oi");
     }
     public function signIn(Request $request){
-    
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-        ]);
-        
+
+        $data = $request->all();
         $user = $this->create($data);
         
         return response()->json(['message' => 'User registered successfully.'], 201);

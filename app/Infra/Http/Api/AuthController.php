@@ -3,6 +3,7 @@
 namespace App\Infra\Http\Api;
 
 use App\Domain\UseCases\UserUseCase;
+use App\Infra\Http\Requests\UserFormRequest;
 use Illuminate\Http\Request;
 
 class AuthController
@@ -71,7 +72,11 @@ class AuthController
         //
     }
 
-    public function signIn(Request $request){
+    public function signIn(UserFormRequest $request){
         return $this->userUseCase->signIn($request);
+    }
+
+    public function login(Request $request){
+        
     }
 }
