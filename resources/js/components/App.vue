@@ -1,10 +1,15 @@
 <template>
     <div class="p-6">
-      <InputText
+      <!--  <InputText
         placeholder="Enter your username"
         v-model="username"
         errorMessage="This field is required"
+        label="Username"
         icon="fi fi-rr-user"
+      /> -->
+
+
+      <SubmitButton
       />
     </div>
   </template>
