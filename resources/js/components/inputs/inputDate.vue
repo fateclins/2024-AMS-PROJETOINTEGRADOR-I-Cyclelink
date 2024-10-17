@@ -9,9 +9,11 @@
                 :class="[
                     'border-gray-300 p-3 pl-10 border-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md',
                     inputClass,
+                    { 'border-red-600': error }
                 ]"
                 v-model="inputValue" :disabled="disabled" />
         </div>
+        <p v-if="error" class="text-red-600 text-sm mt-1">{{ error[0] }}</p> 
     </div>
 </template>
 
@@ -35,9 +37,9 @@
                 type: Boolean,
                 default: false,
             },
-            errorMessage: {
-                type: String,
-                default: '',
+            error: {
+                type: Array,
+                default: () => [],
             },
             modelValue: {
                 type: String,

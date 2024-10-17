@@ -1,9 +1,9 @@
 <template>
     <div class="w-screen h-screen bg-slate-200 dark:bg-slate-900 flex flex-col justify-center items-center">
-        <div class="w-3/6 h-5/6 bg-white dark:bg-slate-800 rounded-md flex flex-col justify-center items-center">
+        <div class="w-3/6 h-[90%] bg-white dark:bg-slate-800 rounded-md flex flex-col justify-center items-center">
             <h1 class="text-5xl text-blue-600 dark:text-slate-300">Sign Up</h1>
-            <p class="pt-4 dark:text-slate-300">Fill all to sign in</p>
-            <form action="" method="post">
+            <p class="pt-1 dark:text-slate-300">Fill all to sign in</p>
+            <form @submit.prevent="register">
                 <inputText
                     label="Name"
                     placeholder="Enter your name"
@@ -11,6 +11,7 @@
                     errorMessage="This field is required"
                     icon="fi fi-rr-user"
                     size="w-96 pt-4"
+                    :error="errors.name"
                 /> 
 
                 <inputText
@@ -20,6 +21,7 @@
                     errorMessage="This field is required"
                     icon="fi fi-rr-envelope"
                     size="w-96 pt-4"
+                    :error="errors.email"
                 /> 
 
                 <inputText
@@ -31,6 +33,7 @@
                     icon="fi fi-rr-id-badge"
                     size="w-96 pt-4"
                     @input="applyCPFMask"
+                    :error="errors.cpf"
                 /> 
 
                 <inputDate
@@ -39,6 +42,7 @@
                     errorMessage="This field is required"
                     icon="fi fi-rs-calendar"
                     size="w-96 pt-4"
+                    :error="errors.born_date"
                 /> 
 
                 <inputText
@@ -48,6 +52,7 @@
                     errorMessage="This field is required"
                     icon="fi fi-rr-key"
                     size="w-96 pt-4"
+                    :error="errors.password"
                 /> 
 
                 <submitButton
@@ -63,6 +68,7 @@
     import inputText from '../inputs/inputText.vue';
     import inputDate from '../inputs/inputDate.vue';
     import submitButton from '../buttons/submitButton.vue';
+    import axios from 'axios';
     export default {
     name: 'signUp',
     components: {
@@ -76,7 +82,8 @@
             email: '',
             cpf: '',
             born_date: '',
-            password: ''
+            password: '',
+            errors: {},
         };
     },
     methods: {
@@ -97,10 +104,30 @@
                     value = value.replace(/(\d{3})/, "$1."); 
                 }
             }
-
-            // Update the v-model with the masked CPF
             this.cpf = value;
-            console.log(this.cpf); // Log the masked value
+        },
+        async register() {
+            try {
+                this.errors = {};
+
+                const response = await axios.post('http://127.0.0.1:8000/api/register', {
+                    name: this.name,
+                    email: this.email,
+                    cpf: this.cpf,
+                    born_date: this.born_date,
+                    password: this.password
+                });
+
+                console.log(response.data); 
+                this.$router.push({ path: '/home' });
+
+            } catch (error) {
+                if (error.response && error.response.data.errors) {
+                    this.errors = error.response.data.errors;
+                } else {
+                    console.error(error);
+                }
+            }
         }
     }
 };
