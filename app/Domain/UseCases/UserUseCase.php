@@ -51,4 +51,12 @@ class UserUseCase
     public function logout(Request $request){
         return $this->UserRepository->logout($request);
     }
+
+    public function sendEmail(Request $request){
+        return $this->UserRepository->sendEmail($request);
+    }
+
+    public function resetPassword(Request $request){
+        return $this->UserRepository->resetPassword($request);
+    }
 }

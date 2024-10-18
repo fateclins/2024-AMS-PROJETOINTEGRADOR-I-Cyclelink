@@ -1,18 +1,19 @@
 <template>
     <div class="w-screen h-screen bg-slate-200 dark:bg-slate-900 flex flex-col justify-center items-center">
-        <div class="w-3/6 h-[90%] bg-white dark:bg-slate-800 rounded-md flex flex-col justify-center items-center">
-            <h1 class="text-5xl text-blue-600 dark:text-slate-300">Sign Up</h1>
-            <p class="pt-1 dark:text-slate-300">Fill all to sign in</p>
-            <form @submit.prevent="register">
+        <div class="w-[95%] max-w-xl h-auto bg-white dark:bg-slate-800 rounded-lg shadow-md flex flex-col items-center p-8">
+            <h1 class="text-4xl font-bold text-blue-600 dark:text-slate-300 mb-2">Sign Up</h1>
+            <p class="text-sm text-gray-600 dark:text-slate-300 mb-6">Fill all fields to create an account</p>
+            
+            <form @submit.prevent="register" class="w-full">
                 <inputText
                     label="Name"
                     placeholder="Enter your name"
                     v-model="name"
                     errorMessage="This field is required"
                     icon="fi fi-rr-user"
-                    size="w-96 pt-4"
+                    size="w-full pt-4"
                     :error="errors.name"
-                /> 
+                />
 
                 <inputText
                     label="Email"
@@ -20,9 +21,9 @@
                     v-model="email"
                     errorMessage="This field is required"
                     icon="fi fi-rr-envelope"
-                    size="w-96 pt-4"
+                    size="w-full pt-4"
                     :error="errors.email"
-                /> 
+                />
 
                 <inputText
                     label="CPF"
@@ -31,19 +32,19 @@
                     inputName="cpf"
                     errorMessage="This field is required"
                     icon="fi fi-rr-id-badge"
-                    size="w-96 pt-4"
+                    size="w-full pt-4"
                     @input="applyCPFMask"
                     :error="errors.cpf"
-                /> 
+                />
 
                 <inputDate
                     label="Birthday"
                     v-model="born_date"
                     errorMessage="This field is required"
                     icon="fi fi-rs-calendar"
-                    size="w-96 pt-4"
+                    size="w-full pt-4"
                     :error="errors.born_date"
-                /> 
+                />
 
                 <inputText
                     label="Password"
@@ -51,18 +52,24 @@
                     v-model="password"
                     errorMessage="This field is required"
                     icon="fi fi-rr-key"
-                    size="w-96 pt-4"
+                    size="w-full pt-4"
                     :error="errors.password"
-                /> 
+                />
 
                 <submitButton
-                    buttonClass="w-96 mt-8"
+                    buttonClass="w-full mt-8 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg"
+                    buttonText="Sign Up"
                 />
             </form>
+            <div class="pt-4">
+                <p class="text-sm text-gray-600 dark:text-slate-300">
+                    Already have an account? 
+                    <router-link to="/login" class="text-blue-600 dark:text-blue-300 hover:underline">Login</router-link>
+                </p>
+            </div>
         </div>
     </div>
 </template>
-
 
 <script>
     import inputText from '../inputs/inputText.vue';
@@ -119,7 +126,7 @@
                 });
 
                 console.log(response.data); 
-                this.$router.push({ path: '/home' });
+                this.$router.push({ path: '/login' });
 
             } catch (error) {
                 if (error.response && error.response.data.errors) {

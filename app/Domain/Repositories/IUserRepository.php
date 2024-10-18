@@ -10,4 +10,6 @@ interface IUserRepository extends IDataRepository
     public function login(Request $request);
     public function logout(Request $request);
     public function signIn(Request $request);
+    public function sendEmail(Request $request);
+    public function resetPassword(Request $request);
 }

@@ -3,8 +3,10 @@
 namespace App\Infra\Http\Api;
 
 use App\Domain\UseCases\UserUseCase;
+use App\Infra\Http\Requests\LoginFormRequest;
 use App\Infra\Http\Requests\UserFormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController
 {
@@ -76,7 +78,24 @@ class AuthController
         return $this->userUseCase->signIn($request);
     }
 
-    public function login(Request $request){
-        
+    public function login(LoginFormRequest $request){
+        return $this->userUseCase->login($request);
+    }
+
+    public function sendEmail(Request $request)
+    {
+        $validator = $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+        return $this->userUseCase->sendEmail($request);
+    }
+
+    public function resetPassword(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|confirmed|min:8',
+            'verification_code' => 'required|integer',
+        ]);
     }
 }

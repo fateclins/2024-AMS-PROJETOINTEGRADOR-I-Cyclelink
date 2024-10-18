@@ -9,9 +9,9 @@
                 :class="[
                     'border-gray-300 p-3 pl-10 border-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md',
                     inputClass,
-                    { 'border-red-600': error }
+                    { 'border-red-600': error && error.length }
                 ]"
-                v-model="inputValue" :disabled="disabled" />
+                v-model="inputValue" :disabled="disabled" @input="handleInput"/>
         </div>
         <p v-if="error" class="text-red-600 text-sm mt-1">{{ error[0] }}</p>
     </div>
@@ -73,5 +73,17 @@ export default {
             this.inputValue = newValue;
         },
     },
+
+    methods: {
+        handleInput() {
+            this.clearError();
+            this.$emit('update:modelValue', this.inputValue);
+        },
+        clearError() {
+            if (this.error.length) {
+                this.$emit('update:error', []);
+            }
+        }
+    }
 };
 </script>
