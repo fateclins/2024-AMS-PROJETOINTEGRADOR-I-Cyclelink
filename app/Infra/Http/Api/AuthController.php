@@ -4,6 +4,7 @@ namespace App\Infra\Http\Api;
 
 use App\Domain\UseCases\UserUseCase;
 use App\Infra\Http\Requests\LoginFormRequest;
+use App\Infra\Http\Requests\ResetPasswordRequest;
 use App\Infra\Http\Requests\UserFormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -90,12 +91,7 @@ class AuthController
         return $this->userUseCase->sendEmail($request);
     }
 
-    public function resetPassword(Request $request){
-
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|confirmed|min:8',
-            'verification_code' => 'required|integer',
-        ]);
+    public function resetPassword(ResetPasswordRequest $request){
+        return 'sim';
     }
 }

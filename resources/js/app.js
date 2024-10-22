@@ -6,8 +6,9 @@ import '@flaticon/flaticon-uicons/css/all/all.css';
 const routes = [
     { path: '/home', component: () => import('./components/App.vue') },
     { path: '/signUp', component: () => import('./components/views/signUp.vue') },
-    { path: '/login', component: () => import('./components/views/login.vue') }
-];
+    { path: '/login', component: () => import('./components/views/login.vue') },
+    { path: '/refreshPassword', component: () => import('./components/views/refreshPassword.vue') }
+    ];
 
 const router = createRouter({
     history: createWebHistory(),

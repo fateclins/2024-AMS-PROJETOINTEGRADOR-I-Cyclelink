@@ -46,7 +46,7 @@
                     :error="errors.born_date"
                 />
 
-                <inputText
+                <inputPassword
                     label="Password"
                     placeholder="Enter your password"
                     v-model="password"
@@ -74,6 +74,7 @@
 <script>
     import inputText from '../inputs/inputText.vue';
     import inputDate from '../inputs/inputDate.vue';
+    import inputPassword from '../inputs/inputPassword.vue';
     import submitButton from '../buttons/submitButton.vue';
     import axios from 'axios';
     export default {
@@ -81,6 +82,7 @@
     components: {
         inputText,
         inputDate,
+        inputPassword,
         submitButton,
     },
     data() {
