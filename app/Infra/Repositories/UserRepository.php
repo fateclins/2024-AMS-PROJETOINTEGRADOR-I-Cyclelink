@@ -58,41 +58,47 @@ class UserRepository extends DataRepository implements IUserRepository
         $numbers = '0123456789';
         $symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
         $allCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
-
-        $verificationCode = '';
-        $verificationCode .= $uppercase[random_int(0, strlen($uppercase) - 1)];
-        $verificationCode .= $numbers[random_int(0, strlen($numbers) - 1)];
-        $verificationCode .= $symbols[random_int(0, strlen($symbols) - 1)];
-
-        for ($i = 3; $i < 7; $i++) {
-            $verificationCode .= $allCharacters[random_int(0, strlen($allCharacters) - 1)];
-        }
+    
         $user = User::where('email', $request->email)->first();
-
-        if(!$user){
-            return response()->json(['message' => 'User not found']);
+        
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
         }
-        $verificationCode = str_shuffle($verificationCode);
+    
+        do {
+            $verificationCode = '';
+            $verificationCode .= $uppercase[random_int(0, strlen($uppercase) - 1)];
+            $verificationCode .= $numbers[random_int(0, strlen($numbers) - 1)];
+            $verificationCode .= $symbols[random_int(0, strlen($symbols) - 1)];
+    
+            for ($i = 3; $i < 7; $i++) {
+                $verificationCode .= $allCharacters[random_int(0, strlen($allCharacters) - 1)];
+            }
+    
+            $verificationCode = str_shuffle($verificationCode);
+    
+            $existingCode = User::where('verification_token', $verificationCode)->first();
+        } while ($existingCode);
+    
         $user->verification_token = $verificationCode;
         $user->save();
-
+    
         Mail::to($user->email)->send(new PasswordResetVerificationCode($verificationCode, $user));
-
+    
         return response()->json(['message' => 'A verification code has been sent to your email.']);
     }
+    
 
     public function resetPassword(Request $request)
-    {
-        $user = User::where('email', $request->email)
-                    ->where('verification_code', $request->verification_code)
-                    ->first();
+    {   
+        $user = User::where('verification_token', $request->verification_code)->first();
 
         if (!$user) {
-            return response()->json(['message' => 'Invalid verification code or email.'], 404);
+            return response()->json(['message' => 'Invalid verification code.'], 404);
         }
 
         $user->password = Hash::make($request->password);
-        $user->verification_code = null; 
+        $user->verification_token = null; 
         $user->save();
 
         return response()->json(['message' => 'Your password has been reset!']);

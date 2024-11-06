@@ -92,6 +92,6 @@ class AuthController
     }
 
     public function resetPassword(ResetPasswordRequest $request){
-        return 'sim';
+        return $this->userUseCase->resetPassword($request);
     }
 }

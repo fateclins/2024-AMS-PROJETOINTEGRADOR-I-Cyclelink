@@ -7,11 +7,12 @@
             <i :class="[icon, 'absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500']"></i>
             <input :id="inputId" :name="inputName" type="password" :placeholder="placeholder"
                 :class="[
-                    'border-gray-300 p-3 pl-10 border-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md',
+                    '!bg-white !dark:bg-gray-800 !border-gray-300 !text-gray-900 !dark:text-white focus:!ring-indigo-500 focus:!border-indigo-500',
+                    'p-3 pl-10 border-2 block w-full sm:text-sm rounded-md',
                     inputClass,
-                    { 'border-red-600': error && error.length }
+                    { '!border-red-600': error && error.length }
                 ]"
-                v-model="inputValue" :disabled="disabled" @input="handleInput"/>
+                v-model="inputValue" :disabled="disabled" @input="handleInput" />
         </div>
         <p v-if="error" class="text-red-600 text-sm mt-1">{{ error[0] }}</p>
     </div>
@@ -19,7 +20,7 @@
 
 <script>
 export default {
-    name: 'inputText',
+    name: 'inputPassword',
     props: {
         label: {
             type: String,
@@ -27,7 +28,7 @@ export default {
         },
         placeholder: {
             type: String,
-            default: 'Enter text...',
+            default: 'Enter password...',
         },
         inputClass: {
             type: String,
@@ -73,7 +74,6 @@ export default {
             this.inputValue = newValue;
         },
     },
-
     methods: {
         handleInput() {
             this.clearError();

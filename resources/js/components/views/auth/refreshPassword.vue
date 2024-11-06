@@ -68,9 +68,9 @@
 </template>
 
 <script>
-import inputText from '../inputs/inputText.vue';
-import inputPassword from '../inputs/inputPassword.vue';
-import submitButton from '../buttons/submitButton.vue';
+import inputText from '../../inputs/inputText.vue';
+import inputPassword from '../../inputs/inputPassword.vue';
+import submitButton from '../../buttons/submitButton.vue';
 
 export default {
     name: 'refreshPassword',
@@ -118,13 +118,12 @@ export default {
                     password: this.password,
                     password_confirmation: this.password_confirmation,
                 });
+                this.$router.push({ path: '/login' });
 
             } catch (error) {
                 if (error.response && error.response.data.errors) {
                     this.errors = error.response.data.errors;
                 }
-
-                console.log(error.response);
             }
         },
 
