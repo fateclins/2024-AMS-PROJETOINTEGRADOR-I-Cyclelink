@@ -3,6 +3,8 @@
 use App\Infra\Http\Api\RentController;
 use App\Infra\Http\Api\AuthController;
 use App\Infra\Http\Api\BikeController;
+use App\Infra\Http\Api\BrandController;
+use App\Infra\Http\Api\TypeBikeController;
 use App\Infra\Http\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,9 +20,10 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 
 
 Route::get('bikes', [BikeController::class, 'index']);
-Route::get('rents', [BikeController::class, 'index']);
 Route::get('rents/{id}', [BikeController::class, 'show']);
-Route::get('/rents', [RentController::class, 'index']);
+Route::get('/rents', [RentController::class, 'index']); 
+Route::get('/brands', [BrandController::class, 'index']); 
+Route::get('/types', [TypeBikeController::class, 'index']); 
 
 
 

@@ -1,6 +1,5 @@
 <template>
   <div class="h-screen w-full bg-slate-200 dark:bg-slate-900 flex">
-    <!-- Sidebar -->
     <div class="bg-white dark:bg-slate-800 p-4 w-80 shadow-md h-full">
       <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-200">Filters</h2>
       <div class="space-y-4">
@@ -47,11 +46,9 @@
       </div>
     </div>
 
-    <!-- Main Content -->
     <div class="flex-grow p-4">
       <navbar />
 
-      <!-- Rents -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div
           v-for="rent in rents"
@@ -75,7 +72,6 @@
         </div>
       </div>
 
-      <!-- Pagination -->
       <div class="mt-4 flex justify-center items-center">
         <button
           class="px-4 py-2 bg-gray-300 text-gray-700 rounded-l disabled:opacity-50"
@@ -133,13 +129,14 @@ export default {
         this.rents = response.data.data;
         this.page = response.data.current_page;
         this.nextPage = response.data.next_page_url !== null;
+        console.error(this.rents);
       } catch (error) {
         console.error("Error fetching rents:", error);
       }
     },
     getPhotoUrl(photoPath) {
       if (!photoPath) {
-        return "placeholder.jpg"; // Fallback for missing images
+        return "placeholder.jpg";
       }
       return `http://127.0.0.1:8000/storage/${photoPath}`;
     },
@@ -157,7 +154,7 @@ export default {
       }
     },
     applyFilters() {
-      this.page = 1; // Reset to first page
+      this.page = 1;
       this.fetchRents();
     },
     changePage(newPage) {
@@ -173,5 +170,4 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
 </style>
