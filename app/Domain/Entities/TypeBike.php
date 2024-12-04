@@ -5,7 +5,7 @@ namespace App\Domain\Entities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class TypeBike extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Brand extends Model
      *
      * @var string
      */
-    protected $table = 'brands';
+    protected $table = 'types_bike';
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +23,6 @@ class Brand extends Model
      */
     protected $fillable = [
         'name',
-        'logo_path',
     ];
 }
 

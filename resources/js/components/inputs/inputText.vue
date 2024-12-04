@@ -11,7 +11,7 @@
                 type="text" 
                 :placeholder="placeholder"
                 :class="[
-                    'bg-white dark:bg-white-800 border-gray-300 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500',
+                    '!bg-white !dark:bg-gray-800 !border-gray-300 !text-gray-900 !dark:text-white focus:!ring-indigo-500 focus:!border-indigo-500',
                     'p-3 pl-10 border-2 block w-full sm:text-sm rounded-md',
                     inputClass,
                     { 'border-red-600': error && error.length }

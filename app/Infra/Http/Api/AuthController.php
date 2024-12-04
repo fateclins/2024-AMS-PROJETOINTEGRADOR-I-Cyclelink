@@ -94,4 +94,31 @@ class AuthController
     public function resetPassword(ResetPasswordRequest $request){
         return $this->userUseCase->resetPassword($request);
     }
+    
+    public function logout(Request $request)
+    {
+        try {
+            $request->user()->currentAccessToken()->delete();
+
+            return response()->json([
+                'message' => 'Successfully logged out.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to log out.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function isAuth()
+    {
+        $user = auth()->user();
+
+        if ($user) {
+            return response()->json($user, 200);
+        } else {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+    }
 }
