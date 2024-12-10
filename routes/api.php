@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 
 
 Route::get('bikes', [BikeController::class, 'index']);
-Route::get('rents/{id}', [BikeController::class, 'show']);
+Route::get('rents/{id}', [RentController::class, 'show']);
 Route::get('/rents', [RentController::class, 'index']); 
 Route::get('/brands', [BrandController::class, 'index']); 
 Route::get('/types', [TypeBikeController::class, 'index']); 
@@ -31,4 +31,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'show']); 
     Route::put('/user', [UserController::class, 'update']);
     Route::apiResource('/rents', RentController::class)->except('index', 'show'); 
+    Route::get('user/rents', [RentController::class, 'showMyRents']);
 });

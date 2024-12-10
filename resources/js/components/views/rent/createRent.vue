@@ -143,7 +143,7 @@ export default {
         });
 
         this.alertMessage = 'Rent created successfully';
-        this.$router.push('/rents');
+        this.$router.push('/my-rents');
       } catch (error) {
         console.error('Error creating rent:', error.response?.data || error.message);
         this.errors = error.response?.data.errors || {};

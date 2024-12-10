@@ -2,27 +2,24 @@
   <div class="h-auto w-full">
     <div class="navbar bg-base-100 dark:bg-slate-950">
       <div class="flex-1">
-        <a class="btn btn-ghost text-xl">CycleLink</a>
+        <a class="btn btn-ghost text-xl" @click="home">CycleLink</a>
       </div>
       <div class="flex-none">
-        <div class="form-control mr-2">
-          <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
-        </div>
         <a v-if="!auth" href="/login">
           <button class="btn btn-primary ml-7">Login</button>
         </a>
         <div v-if="auth" class="dropdown dropdown-end">
           <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
             <div class="w-10 rounded-full">
-              <img :alt="user?.name || 'User avatar'" :src="avatarUrl" />
+              <img :alt="user?.name || 'User avatar'" src="https://cdn.pixabay.com/photo/2020/10/07/20/53/bike-5636252_1280.png" />
             </div>
           </div>
           <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-            <li><a href="/profile" class="justify-between">Profile <span class="badge">New</span></a></li>
-            <li><a>Settings</a></li>
+            <li><a href="/profile" class="justify-between">Profile <span class="badge"></span></a></li>
+            <li><a href="/my-rents">My Bikes</a></li>
             <li><a @click="logout">Logout</a></li>
           </ul>
-        </div>
+        </div>-
       </div>
     </div>
   </div>
@@ -31,10 +28,12 @@
 <script>
 import axios from 'axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'; 
 
 export default {
   name: 'Navbar',
   setup() {
+    const router = useRouter();
     const auth = ref(false);
     const user = ref(null);
     const avatarUrl = ref('https://via.placeholder.com/150');
@@ -80,6 +79,10 @@ export default {
       }
     };
 
+    const home = async () => {
+      router.push({ path: "/" });
+    }
+
     validateToken();
 
     return {
@@ -87,6 +90,7 @@ export default {
       user,
       avatarUrl,
       logout,
+      home,
     };
   },
 };

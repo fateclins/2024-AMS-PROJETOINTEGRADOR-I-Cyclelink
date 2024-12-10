@@ -57,7 +57,7 @@ export default {
                 
                 console.log(response);
                 localStorage.setItem('token', response.data.token);
-                this.$router.push({ path: '/home' });
+                this.$router.push({ path: '/' });
             } catch (error) {
                 if (error.response && error.response.data.errors) {
                     this.errors = error.response.data.errors;

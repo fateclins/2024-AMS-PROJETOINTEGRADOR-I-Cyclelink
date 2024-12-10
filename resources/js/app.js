@@ -12,7 +12,10 @@ const routes = [
     { path: '/refreshPassword', component: () => import('./components/views/auth/refreshPassword.vue') },
     { path: '/', component: () => import('./components/views/home.vue') },
     { path: '/profile', component: () => import('./components/views/profile.vue') },
-    { path: '/createRent', component: () => import('./components/views/rent/createRent.vue') }
+    { path: '/createRent', component: () => import('./components/views/rent/createRent.vue') },
+    { path: '/rent/:id', name: 'Details', component: () => import('./components/views/rent/showRent.vue') },
+    { path: '/my-rents', component: () => import('./components/views/rent/myRents.vue') }
+
 ];
 
 const router = createRouter({

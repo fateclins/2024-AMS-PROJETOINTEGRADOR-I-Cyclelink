@@ -17,7 +17,6 @@ class RentController extends Controller
     {
         $query = Rent::with(['bike.typeBike', 'bike.brand']); // Include related data
 
-        // Apply filters
         if ($request->filled('brand_id')) {
             $query->whereHas('bike', fn($q) => $q->where('brand_id', $request->brand_id));
         }
@@ -34,7 +33,6 @@ class RentController extends Controller
             $query->where('price', '<=', $request->price_max);
         }
 
-        // Paginate results
         $rents = $query->paginate(10);
 
         return response()->json($rents);
@@ -141,10 +139,19 @@ class RentController extends Controller
      */
     public function show($id)
     {
-        // Find the rent by ID
-        $rent = Rent::findOrFail($id);
-
-        // Return the rent data
+        $rent = Rent::with(['bike.typeBike', 'user'])->findOrFail($id);
         return response()->json($rent);
+    }
+
+
+    public function showMyRents(){
+        $userId = auth()->user()->id;
+        $rents = Rent::where('user_id', $userId)->with('bike')->get();
+
+        if ($rents->isEmpty()) {
+            return response()->json(['message' => 'No rents found for this user.'], 404);
+        }
+
+        return response()->json($rents);
     }
 }

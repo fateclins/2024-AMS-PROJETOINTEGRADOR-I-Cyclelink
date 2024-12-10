@@ -66,8 +66,11 @@
           <p class="text-gray-600 dark:text-gray-400">Year: {{ rent.bike.year }}</p>
           <p class="text-gray-600 dark:text-gray-400">Price: ${{ rent.price }}</p>
           <p class="text-gray-600 dark:text-gray-400">Type: {{ rent.bike.type_bike.name }}</p>
-          <button class="mt-2 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            Rent Now
+          <button
+            class="mt-2 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+            @click="goToDetails(rent.id)"
+          >
+            Buy Now
           </button>
         </div>
       </div>
@@ -118,6 +121,10 @@ export default {
     };
   },
   methods: {
+    goToDetails(rentId) {
+      this.$router.push({ name: 'Details', params: { id: rentId } });
+    },
+    
     async fetchRents() {
       const params = {
         ...this.filters,
